@@ -51,26 +51,12 @@ async function run() {
 
 	const targetText = await createTargetText()
 
-	const oldwebhookContent = {
-		username: `nx-ecosystem-ci (${env.WORKFLOW_NAME})`,
-		avatar_url: 'https://github.com/nrwl.png',
-		embeds: [
-			{
-				title: `${statusConfig[env.STATUS].emoji}  ${env.SUITE}`,
-				description: await createDescription(env.SUITE, targetText),
-				color: statusConfig[env.STATUS].color,
-			},
-		],
-	}
-
-	const xwebhookContent = {
-		username: 'nx-ecosystem-ci (ci)',
-		icon_url: 'https://github.com/nrwl.png',
+	const webhookContent = {
 		blocks: [
 			{
-				type: 'header',
+				type: 'section',
 				text: {
-					type: 'plain_text',
+					type: 'mrkdwn',
 					text: `${statusConfig[env.STATUS].emoji}  ${env.SUITE}`,
 				},
 			},
@@ -79,20 +65,6 @@ async function run() {
 				text: {
 					type: 'mrkdwn',
 					text: await createDescription(env.SUITE, targetText),
-				},
-			},
-		],
-	}
-
-	const webhookContent = {
-		blocks: [
-			{
-				type: 'section',
-				text: {
-					type: 'mrkdwn',
-					text: `Hello, this is the result of the CI's test run. ${
-						statusConfig[env.STATUS].emoji
-					}  ${env.SUITE}`,
 				},
 			},
 			{
