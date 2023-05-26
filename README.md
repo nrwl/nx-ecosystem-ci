@@ -1,6 +1,6 @@
-# vite-ecosystem-ci
+# nx-ecosystem-ci
 
-This repository is used to run integration tests for vite ecosystem projects
+This repository is used to run integration tests for Nx ecosystem projects. It's inspired by the [vitejs/ecosystem-ci](https://github.com/vitejs/ecosystem-ci).
 
 ## via github workflow
 
@@ -23,9 +23,6 @@ Workflows are sheduled to run automatically every Monday, Wednesday and Friday
 - or `pnpm test <suitename>` to select a suite
 - or `tsx ecosystem-ci.ts`
 
-You can pass `--tag v2.8.0-beta.1`, `--branch somebranch` or `--commit abcd1234` option to select a specific vite version to build.
-If you pass `--release 2.7.13`, vite build will be skipped and vite is fetched from the registry instead
-
 The repositories are checked out into `workspace` subdirectory as shallow clones
 
 # how to add a new integration test
@@ -34,12 +31,13 @@ The repositories are checked out into `workspace` subdirectory as shallow clones
 - once you are confidente the suite works, add it to the lists of suites in the [workflows](../../actions/)
 
 > the current utilities focus on pnpm based projects. Consider switching to pnpm or contribute utilities for other pms
+> TODO: add note about `packageManager: yarn` on package.json here.
 
 # reporting results
 
 ## Slack
 
-Results are posted automatically to `#ecosystem-ci` on [vite slack](https://chat.vitejs.dev/)
+Results are posted automatically to `#nx-ecosystem-ci` channel on [Nrwl Community slack](https://join.slack.com/t/nrwlcommunity/shared_invite/zt-1wbp4do0g-3czhwijFnRzsilGI7eJuag)
 
 ### on your own server
 

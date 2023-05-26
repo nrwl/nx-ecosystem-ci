@@ -15,11 +15,8 @@ import { detect, AGENTS, Agent, getCommand } from '@antfu/ni'
 import actionsCore from '@actions/core'
 // eslint-disable-next-line n/no-unpublished-import
 import * as semver from 'semver'
-import fetch from 'node-fetch'
 
 const isGitHubActions = !!process.env.GITHUB_ACTIONS
-
-const nxCliCommands = ['create-nx-plugin', 'create-nx-workspace', 'nx']
 
 let cwd: string
 let env: ProcessEnv
@@ -240,11 +237,12 @@ export async function runInRepo(options: RunOptions & RepoOptions) {
 	const frozenInstall = getCommand(agent, 'frozen')
 	await $`${frozenInstall}`
 	if (verify && test) {
+		console.log('Running tests suite before migrating to latest version of Nx.')
 		await beforeBuildCommand?.(pkg.scripts)
 		await buildCommand?.(pkg.scripts)
 		await beforeTestCommand?.(pkg.scripts)
 		await testCommand?.(pkg.scripts)
-		// await e2eCommand?.(pkg.scripts)
+		await e2eCommand?.(pkg.scripts)
 	}
 
 	const pm = agent?.split('@')[0]
@@ -306,30 +304,6 @@ async function overridePackageManagerVersion(
 		return true
 	}
 	return false
-}
-
-async function getOverrides(
-	optionsOverrides: Overrides,
-	nxPackages: string[],
-): Promise<Overrides> {
-	const overrides = optionsOverrides || {}
-
-	for (const pkg of nxPackages) {
-		overrides[pkg] ||= await nextVersion(pkg)
-	}
-
-	return overrides
-}
-
-function getNxDependencies(pkg: any): string[] {
-	const dependencies = Object.keys(pkg['dependencies'] || {}).filter((dep) =>
-		dep.startsWith('@nx'),
-	)
-	const devDependencies = Object.keys(pkg['devDependencies'] || {}).filter(
-		(dep) => dep.startsWith('@nx'),
-	)
-
-	return [...(dependencies ?? []), ...(devDependencies ?? []), ...nxCliCommands]
 }
 
 export async function applyPackageOverridesAndInstall(
@@ -403,20 +377,6 @@ export async function getInstallCommand(dir: string): Promise<string> {
 	}
 }
 
-export async function nxMigrateNext() {
-	await $`nx migrate next`
-}
-
 export function dirnameFrom(url: string) {
 	return path.dirname(fileURLToPath(url))
-}
-
-async function nextVersion(packageName: string): Promise<string> {
-	return fetch(`https://registry.npmjs.org/${packageName}`)
-		.then((response) => response.json())
-		.then(
-			(jsonData) =>
-				(jsonData as any)?.['dist-tags']?.['next'] ??
-				(jsonData as any)?.['dist-tags']?.['latest'],
-		)
 }
