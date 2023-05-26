@@ -37,9 +37,9 @@ The repositories are checked out into `workspace` subdirectory as shallow clones
 
 # reporting results
 
-## Discord
+## Slack
 
-Results are posted automatically to `#ecosystem-ci` on [vite discord](https://chat.vitejs.dev/)
+Results are posted automatically to `#ecosystem-ci` on [vite slack](https://chat.vitejs.dev/)
 
 ### on your own server
 
@@ -48,9 +48,9 @@ Results are posted automatically to `#ecosystem-ci` on [vite discord](https://ch
 - copy the webhook url
 - get in touch with admins of this repo so they can add the webhook
 
-#### how to add a discord webhook here
+#### how to add a slack webhook here
 
 - Go to `<github repo>/settings/secrets/actions` and click on `New repository secret`
-- set `Name` as `DISCORD_WEBHOOK_URL`
-- paste the discord webhook url you copied from above into `Value`
+- set `Name` as `SLACK_WEBHOOK_URL`
+- paste the slack webhook url you copied from above into `Value`
 - Click `Add secret`

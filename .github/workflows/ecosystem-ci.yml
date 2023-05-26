@@ -9,28 +9,6 @@ env:
 on:
   schedule:
     - cron: "0 5 * * 1,3,5" # monday,wednesday,friday 5AM
-  workflow_dispatch:
-    inputs:
-      refType:
-        description: "type of ref"
-        required: true
-        type: choice
-        options:
-          - branch
-          - tag
-          - commit
-          - release
-        default: "branch"
-      ref:
-        description: "nx ref to use"
-        required: true
-        type: string
-        default: "master"
-      repo:
-        description: "nx repository to use"
-        required: true
-        type: string
-        default: "nrwl/nx"
   repository_dispatch:
     types: [ecosystem-ci]
 jobs:
@@ -67,18 +45,13 @@ jobs:
       - run: pnpm i --frozen-lockfile
       - run: >-
           pnpm tsx ecosystem-ci.ts
-          --${{ inputs.refType || github.event.client_payload.refType || 'branch' }} ${{ inputs.ref || github.event.client_payload.ref || 'master' }}
-          --repo ${{ inputs.repo || github.event.client_payload.repo || 'nrwl/nx' }}
           ${{ matrix.suite }}
         id: ecosystem-ci-run
       - if: always()
-        run: pnpm tsx discord-webhook.ts
+        run: pnpm tsx slack-webhook.ts
         env:
           WORKFLOW_NAME: ci
-          REF_TYPE: ${{ inputs.refType || github.event.client_payload.refType || 'branch' }}
-          REF: ${{ inputs.ref || github.event.client_payload.ref || 'master' }}
-          REPO: ${{ inputs.repo || github.event.client_payload.repo || 'nrwl/nx' }}
           SUITE: ${{ matrix.suite }}
           STATUS: ${{ job.status }}
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
