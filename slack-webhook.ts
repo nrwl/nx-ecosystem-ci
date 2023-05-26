@@ -20,7 +20,7 @@ const statusConfig = {
 	},
 	cancelled: {
 		color: parseInt('768390', 16),
-		emoji: ':stop_button:',
+		emoji: ':octagonal_sign:',
 	},
 }
 
@@ -49,8 +49,6 @@ async function run() {
 
 	await setupEnvironment()
 
-	const targetText = await createTargetText()
-
 	const webhookContent = {
 		blocks: [
 			{
@@ -61,11 +59,8 @@ async function run() {
 				},
 			},
 			{
-				type: 'section',
-				text: {
-					type: 'mrkdwn',
-					text: await createDescription(env.SUITE, targetText),
-				},
+				type: 'actions',
+				elements: await actionsElements(env.SUITE),
 			},
 			{
 				type: 'divider',
@@ -151,21 +146,44 @@ async function fetchJobs() {
 	}
 }
 
-async function createDescription(suite: string, targetText: string) {
+async function actionsElements(
+	suite: string,
+): Promise<{ type: string; text: object; value: string; url: string }[]> {
 	const runUrl = await createRunUrl(suite)
-	const open = runUrl === undefined ? 'Null' : `[Open](${runUrl})`
-
-	return `
-:scroll:\u00a0\u00a0${open}\u3000\u3000:zap:\u00a0\u00a0${targetText}
-`.trim()
+	const nxText = await nxRepoInfo()
+	return [
+		{
+			type: 'button',
+			text: {
+				type: 'plain_text',
+				text: 'CI Run details',
+				emoji: true,
+			},
+			value: 'ci_run_details',
+			url: runUrl as string,
+		},
+		{
+			type: 'button',
+			text: {
+				type: 'plain_text',
+				text: nxText.tagName,
+				emoji: true,
+			},
+			value: 'nx_tag_details',
+			url: nxText.tagLink,
+		},
+	]
 }
 
-async function createTargetText() {
+async function nxRepoInfo() {
 	const repoText = 'nrwl/nx'
 	const nextVersion = await nextNxVersion()
 
 	const link = `https://github.com/nrwl/nx/commits/${nextVersion}`
-	return `[${repoText}@${nextVersion}](${link})`
+	return {
+		tagLink: link,
+		tagName: `${repoText}@${nextVersion}`,
+	}
 }
 
 run().catch((e) => {
