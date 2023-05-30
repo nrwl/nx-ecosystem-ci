@@ -43,11 +43,11 @@ export async function $(literals: TemplateStringsArray, ...values: any[]) {
 		stdio: 'pipe',
 		cwd,
 	})
+
 	proc.stdin && process.stdin.pipe(proc.stdin)
 	proc.stdout && proc.stdout.pipe(process.stdout)
 	proc.stderr && proc.stderr.pipe(process.stderr)
 	const result = await proc
-
 	if (isGitHubActions) {
 		actionsCore.endGroup()
 	}
@@ -231,11 +231,17 @@ export async function runInRepo(options: RunOptions & RepoOptions) {
 
 	const pkgFile = path.join(dir, 'package.json')
 	const pkg = JSON.parse(await fs.promises.readFile(pkgFile, 'utf-8'))
+	const pm = agent?.split('@')[0]
 
 	await beforeInstallCommand?.(pkg.scripts)
 
 	const frozenInstall = getCommand(agent, 'frozen')
-	await $`${frozenInstall}`
+	try {
+		await $`${frozenInstall}`
+	} catch (e) {
+		handleNoFrozenError(pm, e)
+	}
+
 	if (verify && test) {
 		console.log('Running tests suite before migrating to latest version of Nx.')
 		await beforeBuildCommand?.(pkg.scripts)
@@ -245,10 +251,14 @@ export async function runInRepo(options: RunOptions & RepoOptions) {
 		await e2eCommand?.(pkg.scripts)
 	}
 
-	const pm = agent?.split('@')[0]
 	await $`${pm} nx migrate next`
 	const justInstall = getCommand(agent, 'install')
-	await $`${justInstall}`
+	try {
+		await $`${justInstall}`
+	} catch (e) {
+		handleNoFrozenError(pm, e)
+	}
+
 	await $`${pm} nx migrate --run-migrations --if-exists --no-interactive`
 
 	await beforeBuildCommand?.(pkg.scripts)
@@ -261,6 +271,17 @@ export async function runInRepo(options: RunOptions & RepoOptions) {
 	await e2eCommand?.(pkg.scripts)
 
 	return { dir }
+}
+
+async function handleNoFrozenError(pm: string, e: any) {
+	if (pm === 'pnpm' && e.message?.includes('ERR_PNPM_OUTDATED_LOCKFILE')) {
+		console.warn(
+			`Frozen install failed, falling back to non-frozen install. Error was: ${e.message}`,
+		)
+		await $`${pm} install --no-frozen-lockfile`
+	} else {
+		throw e
+	}
 }
 
 /**
