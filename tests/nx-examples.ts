@@ -4,9 +4,10 @@ import { RunOptions } from '../types'
 export async function test(options: RunOptions) {
 	await runInRepo({
 		...options,
-		repo: 'mandarini/nx-examples',
-		branch: 'test/katerina',
-		build: 'vite:build',
-		test: 'vite:test',
+		repo: 'nrwl/nx-examples',
+		branch: 'master',
+		build: ['affected:build'],
+		test: ['affected:test'],
+		e2e: ['affected:e2e'],
 	})
 }
