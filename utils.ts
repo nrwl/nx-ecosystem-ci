@@ -249,7 +249,7 @@ export async function runInRepo(options: RunOptions & RepoOptions) {
 	await $`${pm} nx migrate next`
 	const justInstall = getCommand(agent, 'install')
 	await $`${justInstall}`
-	await $`${pm} nx migrate --run-migrations --no-interactive`
+	await $`${pm} nx migrate --run-migrations --if-exists --no-interactive`
 
 	await beforeBuildCommand?.(pkg.scripts)
 	await buildCommand?.(pkg.scripts)

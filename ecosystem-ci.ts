@@ -10,11 +10,6 @@ const cli = cac()
 cli
 	.command('[...suites]', 'build nx and run selected suites')
 	.option('--verify', 'verify checkouts by running tests', { default: false })
-	.option('--repo <repo>', 'nx repository to use', { default: 'nrwl/nx' })
-	.option('--branch <branch>', 'nx branch to use', { default: 'master' })
-	.option('--tag <tag>', 'nx tag to use')
-	.option('--commit <commit>', 'nx commit sha to use')
-	.option('--release <version>', 'nx release to use from npm registry')
 	.action(async (suites, options: CommandOptions) => {
 		const { root, workspace } = await setupEnvironment()
 		const suitesToRun = getSuitesToRun(suites, root)
@@ -39,7 +34,6 @@ cli
 		'verify checkout by running tests before using local nx',
 		{ default: false },
 	)
-	.option('--release <version>', 'nx release to use from npm registry')
 	.action(async (suites, options: CommandOptions) => {
 		const { root, workspace } = await setupEnvironment()
 		const suitesToRun = getSuitesToRun(suites, root)
@@ -53,47 +47,6 @@ cli
 		}
 	})
 
-cli
-	.command(
-		'bisect [...suites]',
-		'use git bisect to find a commit in nx that broke suites',
-	)
-	.option('--good <ref>', 'last known good ref, e.g. a previous tag. REQUIRED!')
-	.option('--verify', 'verify checkouts by running tests', { default: false })
-	.action(async (suites, options: CommandOptions & { good: string }) => {
-		if (!options.good) {
-			console.log(
-				'you have to specify a known good version with `--good <commit|tag>`',
-			)
-			process.exit(1)
-		}
-		const { root, workspace } = await setupEnvironment()
-		const suitesToRun = getSuitesToRun(suites, root)
-		let isFirstRun = true
-		const { verify } = options
-		const runSuite = async () => {
-			try {
-				for (const suite of suitesToRun) {
-					await run(suite, {
-						verify: !!(isFirstRun && verify),
-						skipGit: !isFirstRun,
-						root,
-						workspace,
-					})
-				}
-				isFirstRun = false
-				return null
-			} catch (e) {
-				return e
-			}
-		}
-		const initialError = await runSuite()
-		if (initialError) {
-			console.log('initial run failed', initialError)
-		} else {
-			console.log('initial run succeeded')
-		}
-	})
 cli.help()
 cli.parse()
 
