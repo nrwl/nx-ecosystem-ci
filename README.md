@@ -1,9 +1,12 @@
 # nx-ecosystem-ci
 
-This repository is used to run integration tests for Nx ecosystem projects.
-It's inspired by the [vitejs/ecosystem-ci](https://github.com/vitejs/ecosystem-ci). This repository started as a fork of [vitejs/ecosystem-ci](https://github.com/vitejs/ecosystem-ci), thank you [Vite.js](https://vitejs.dev/) team!
+This repository is used to run integration tests for [Nx](https://nx.dev) ecosystem projects. Check out the [Nx Github repo](https://github.com/nrwl/nx).
 
-> Original fork can be found [here](https://github.com/nrwl/nx-ecosystem-ci-fork), but it was moved to a standalone repository to avoid confusion with the original project, and to allow for more flexibility in the future, enable issue reporting, and make PRs easier to manage.
+The purpose of this repository is to make sure that projects using Nx are compatible with the `next` version of Nx.
+
+It's inspired by the [vitejs/ecosystem-ci](https://github.com/vitejs/ecosystem-ci).
+
+> This repository started as a fork of [vitejs/ecosystem-ci](https://github.com/vitejs/ecosystem-ci), thank you [Vite.js](https://vitejs.dev/) team! Original fork can be found [here](https://github.com/nrwl/nx-ecosystem-ci-fork), but it was moved to a standalone repository to avoid confusion with the original project, and to allow for more flexibility in the future, enable issue reporting, and make PRs easier to manage.
 
 ## via github workflow
 
