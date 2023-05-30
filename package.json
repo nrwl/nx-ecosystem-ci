@@ -8,7 +8,6 @@
     "lint:fix": "pnpm lint --fix",
     "format": "prettier --ignore-path .gitignore --check .",
     "format:fix": "pnpm format --write",
-    "test:self": "tsx ecosystem-ci.ts _selftest",
     "test": "tsx ecosystem-ci.ts"
   },
   "simple-git-hooks": {
