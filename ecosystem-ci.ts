@@ -8,8 +8,12 @@ import { CommandOptions, RunOptions } from './types'
 
 const cli = cac()
 cli
-	.command('[...suites]', 'build nx and run selected suites')
-	.option('--verify', 'verify checkouts by running tests', { default: false })
+	.command('[...suites]', 'run selected suites')
+	.option(
+		'--verify',
+		'verify checkouts by running tests before using next nx',
+		{ default: false },
+	)
 	.action(async (suites, options: CommandOptions) => {
 		const { root, workspace } = await setupEnvironment()
 		const suitesToRun = getSuitesToRun(suites, root)
@@ -28,12 +32,10 @@ cli
 	})
 
 cli
-	.command('run-suites [...suites]', 'run single suite with pre-built nx')
-	.option(
-		'--verify',
-		'verify checkout by running tests before using local nx',
-		{ default: false },
-	)
+	.command('run-suites [...suites]', 'run single suite')
+	.option('--verify', 'verify checkout by running tests before using next nx', {
+		default: false,
+	})
 	.action(async (suites, options: CommandOptions) => {
 		const { root, workspace } = await setupEnvironment()
 		const suitesToRun = getSuitesToRun(suites, root)
