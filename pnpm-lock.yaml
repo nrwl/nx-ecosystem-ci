@@ -33,6 +33,12 @@ devDependencies:
   '@typescript-eslint/parser':
     specifier: ^5.59.2
     version: 5.59.2(eslint@8.40.0)(typescript@5.0.4)
+  cz-git:
+    specifier: ^1.4.0
+    version: 1.4.0
+  czg:
+    specifier: ^1.4.0
+    version: 1.4.0
   eslint:
     specifier: ^8.40.0
     version: 8.40.0
@@ -1803,6 +1809,15 @@ packages:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
+
+  /cz-git@1.4.0:
+    resolution: {integrity: sha512-3ZC3jA337Qp5FkoqBwIFG3o+R70oHl1iRpEd3dAjbUnU/rUA4YK2hy7A3PueSgcPh9HslPCcqXdeL+jWAbTrNw==}
+    dev: true
+
+  /czg@1.4.0:
+    resolution: {integrity: sha512-PgCCozvPZV+3X2f8Aq/eyGQqcUebwXWYAflVjTfPB2NesR53LHn9sPGRazFX29OLJiDcFYZdKgSyYJpvgWEcZQ==}
+    hasBin: true
+    dev: true
 
   /data-uri-to-buffer@4.0.0:
     resolution: {integrity: sha512-Vr3mLBA8qWmcuschSLAOogKgQ/Jwxulv3RNE4FXnYWRGujzrRWQI4m12fQqRkwX06C0KanhLr4hK+GydchZsaA==}

@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Nx Ecosystem CI",
   "scripts": {
+    "commit": "czg",
     "prepare": "pnpm exec simple-git-hooks",
     "lint": "eslint --ignore-path .gitignore '**/*.ts'",
     "lint:fix": "pnpm lint --fix",
@@ -32,6 +33,12 @@
     "url": "git+https://github.com/nrwl/nx-ecosystem-ci.git"
   },
   "license": "MIT",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-git",
+      "czConfig": "./commitizen.js"
+    }
+  },
   "bugs": {
     "url": "https://github.com/nrwl/nx-ecosystem-ci/issues"
   },
@@ -49,6 +56,8 @@
     "@types/semver": "^7.3.13",
     "@typescript-eslint/eslint-plugin": "^5.59.2",
     "@typescript-eslint/parser": "^5.59.2",
+    "cz-git": "^1.4.0",
+    "czg": "^1.4.0",
     "eslint": "^8.40.0",
     "eslint-define-config": "^1.20.0",
     "eslint-plugin-n": "^15.7.0",
