@@ -25,8 +25,9 @@ Workflows are sheduled to run automatically every Monday, Wednesday and Friday
 
 - clone this repo
 - run `pnpm i`
-- run `pnpm test` to run all suites
+- run `pnpm test all` to run all suites
 - or `pnpm test <suitename>` to select a suite
+- or just `pnpm test` to get prompts to select a suite
 - or `tsx ecosystem-ci.ts`
 
 The repositories are checked out into `workspace` subdirectory as shallow clones
