@@ -4,9 +4,9 @@ This repository is used to run integration tests for [Nx](https://nx.dev) ecosys
 
 The purpose of this repository is to make sure that projects using Nx are compatible with the `next` version of Nx.
 
-It's inspired by the [vitejs/ecosystem-ci](https://github.com/vitejs/ecosystem-ci).
+It's inspired by the [vitejs/ecosystem-ci](https://github.com/vitejs/vite-ecosystem-ci).
 
-> This repository started as a fork of [vitejs/ecosystem-ci](https://github.com/vitejs/ecosystem-ci), thank you [Vite.js](https://vitejs.dev/) team! Original fork can be found [here](https://github.com/nrwl/nx-ecosystem-ci-fork), but it was moved to a standalone repository to avoid confusion with the original project, and to allow for more flexibility in the future, enable issue reporting, and make PRs easier to manage.
+> This repository started as a fork of [vitejs/ecosystem-ci](https://github.com/vitejs/vite-ecosystem-ci), thank you [Vite.js](https://vitejs.dev/) team! Original fork can be found [here](https://github.com/nrwl/nx-ecosystem-ci-fork), but it was moved to a standalone repository to avoid confusion with the original project, and to allow for more flexibility in the future, enable issue reporting, and make PRs easier to manage.
 
 ## via github workflow
 
@@ -33,11 +33,9 @@ The repositories are checked out into `workspace` subdirectory as shallow clones
 
 # how to add a new integration test
 
-- check out the existing [tests](./tests) and add one yourself. Thanks to some utilities it is really easy
-- once you are confident the suite works, add it to the lists of suites in the [workflows](../../actions/)
+Please read our [contributing guide](CONTRIBUTING.md) for details on how to add a new integration test.
 
-> the current utilities focus on pnpm based projects. Consider switching to pnpm or contribute utilities for other pms
-> TODO: add note about `packageManager: yarn` on package.json here.
+> the current utilities focus on `pnpm` based projects. Consider switching to `pnpm` or contribute utilities for other pms
 
 # reporting results
 
