@@ -2,11 +2,11 @@
 
 ## How it works
 
-The Nx Ecosystem CI is a fork of the [Vite Ecosystem CI](https://github.com/vitejs/vite-ecosystem-ci) but it is adjusted for the Nx ecosystem. It works in the following way:
+The Nx Ecosystem CI is a fork of the [Vite Ecosystem CI](https://github.com/vitejs/vite-ecosystem-ci, adapted for the Nx ecosystem. It works as follows:
 
-1. It clones the provided repo which uses Nx
+1. It clones the provided repository
 2. It installs the project’s dependencies
-3. It runs a number of scripts specified by the project’s author (eg. `test`, `build`, `e2e`)
+3. It runs the specified scripts (eg. `test`, `build`, `e2e`)
 4. It migrates the repository to the next version of Nx (using `nx migrate next`)
 5. It runs the scripts again
 6. It reports the results of the runs to the [Nrwl Community slack](https://join.slack.com/t/nrwlcommunity/shared_invite/zt-1wbp4do0g-3czhwijFnRzsilGI7eJuag), in the `#nx-ecosystem-ci` channel
@@ -45,11 +45,11 @@ export async function test(options: RunOptions) {
 }
 ```
 
-In this example, the suite is set up to run on the [`nrwl/nx-labs`](https://github.com/nrwl/nx-labs) repository on the `'main'` branch. It will run `build rspack`, `test rspack`, and `e2e rspack-e2e` as its build, test, and e2e tests respectively. These commands will be invoked using the package manager used by your repository. So, in the `nx-labs` case, it will run `yarn build rspack` in the `nrwl/nx-labs` repo.
+In this example, the suite is set up to run on the [`nrwl/nx-labs`](https://github.com/nrwl/nx-labs) repository on the `'main'` branch. It will run `build rspack`, `test rspack`, and `e2e rspack-e2e` as its build, test, and e2e tests respectively. These commands will be invoked using the package manager used by your repository. So, in the `nx-labs` case, it will run `yarn build rspack` in the `nrwl/nx-labs` repository.
 
 ### Defining the `package.json` scripts
 
-For this reason, adding a new test suite to the Nx Ecosystem CI also requires setting up appropriate `scripts` in your repository's `package.json` file. These scripts provide the commands that will be invoked by your package manager to carry out the `build`, `test`, and `e2e` steps.
+Adding a new test suite to the Nx Ecosystem CI requires setting up appropriate `scripts` in your repository's `package.json` file. These scripts provide the commands that will be invoked by your package manager to carry out the `build`, `test`, and `e2e` steps.
 
 Here's an example of how scripts might be configured in a `package.json` file for a repository using Nx:
 
@@ -84,7 +84,7 @@ With this setup, the Nx Ecosystem CI will run these scripts in your repository a
 
 ### Specifying the `packageManager` in your `package.json`
 
-It is also important to specify the package manager you're using in your `package.json` file. This is because Nx Ecosystem CI needs to know which package manager to use when installing dependencies and running scripts for your project. By default, Nx Ecosystem CI uses `pnpm`, but not all projects use this package manager.
+It is important to specify the package manager you're using in your `package.json` file. This is because Nx Ecosystem CI needs to know which package manager to use when installing dependencies and running scripts for your project. By default, Nx Ecosystem CI uses `pnpm`, but not all projects use this package manager.
 
 To specify your package manager, add a [`packageManager` field](https://nodejs.org/api/packages.html#packagemanager) to your `package.json` file. This field should have a string value that represents the package manager you're using, and potentially it's version. For example, in the [`nrwl/nx-labs`](https://github.com/nrwl/nx-labs) we specify the `packageManager` like [this](https://github.com/nrwl/nx-labs/blob/main/package.json#LL25C1-L25C36):
 
