@@ -2,7 +2,7 @@
 
 ## How it works
 
-The Nx Ecosystem CI is a fork of the [Vite Ecosystem CI](https://github.com/vitejs/vite-ecosystem-ci, adapted for the Nx ecosystem. It works as follows:
+The Nx Ecosystem CI is a fork of the [Vite Ecosystem CI](https://github.com/vitejs/vite-ecosystem-ci), adapted for the Nx ecosystem. It works as follows:
 
 1. It clones the provided repository
 2. It installs the project’s dependencies
