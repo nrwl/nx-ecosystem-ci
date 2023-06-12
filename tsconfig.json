@@ -13,6 +13,8 @@
 		"useUnknownInCatchVariables": false,
 		"allowSyntheticDefaultImports": true,
 		"lib": ["esnext"],
-		"sourceMap": true
+		"sourceMap": true,
+		"jsx": "react",
+		"allowJs": true
 	}
 }
