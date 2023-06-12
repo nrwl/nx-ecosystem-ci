@@ -6,7 +6,7 @@ export async function test(options: RunOptions) {
 		...options,
 		repo: 'nrwl/nx-labs',
 		branch: 'main',
-		build: ['build aws-lambda'],
-		test: ['test aws-lambda'],
+		build: ['build-ci aws-lambda'],
+		test: ['test-ci aws-lambda'],
 	})
 }

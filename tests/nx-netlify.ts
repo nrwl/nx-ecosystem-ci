@@ -6,7 +6,7 @@ export async function test(options: RunOptions) {
 		...options,
 		repo: 'nrwl/nx-labs',
 		branch: 'main',
-		build: ['build netlify'],
-		test: ['test netlify'],
+		build: ['build-ci netlify'],
+		test: ['test-ci netlify'],
 	})
 }

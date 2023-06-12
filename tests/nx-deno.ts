@@ -6,8 +6,8 @@ export async function test(options: RunOptions) {
 		...options,
 		repo: 'nrwl/nx-labs',
 		branch: 'main',
-		build: ['build deno'],
-		test: ['test deno'],
-		e2e: ['e2e deno-e2e'],
+		build: ['build-ci deno'],
+		test: ['test-ci deno'],
+		e2e: ['e2e-ci deno-e2e'],
 	})
 }

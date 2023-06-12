@@ -6,8 +6,8 @@ export async function test(options: RunOptions) {
 		...options,
 		repo: 'nrwl/nx-labs',
 		branch: 'main',
-		build: ['build nx-ignore'],
-		test: ['test nx-ignore'],
-		e2e: ['e2e nx-ignore-e2e'],
+		build: ['build-ci nx-ignore'],
+		test: ['test-ci nx-ignore'],
+		e2e: ['e2e-ci nx-ignore-e2e'],
 	})
 }
