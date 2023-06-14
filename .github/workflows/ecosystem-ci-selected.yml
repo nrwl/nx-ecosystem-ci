@@ -23,6 +23,11 @@ on:
           - nx-remix
           - nx-rspack
           - nxext-svelte
+          - nxext-solid
+          - nxext-vue
+          - nxext-capacitor
+          - nxext-ionic-angular
+          - nxext-ionic-react
           - qwik-nx
 jobs:
   execute-selected-suite:
