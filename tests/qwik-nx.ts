@@ -8,6 +8,6 @@ export async function test(options: RunOptions) {
 		branch: 'main',
 		build: ['build qwik-nx'],
 		test: ['test qwik-nx'],
-		e2e: ['e2e qwik-nx'],
+		e2e: ['e2e qwik-nx-e2e'],
 	})
 }
