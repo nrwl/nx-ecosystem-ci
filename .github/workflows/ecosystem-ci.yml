@@ -29,6 +29,7 @@ jobs:
           - nx-rspack
           - nxext-svelte
           - nxext-solid
+          - nxext-stencil
           - nxext-vue
           - nxext-capacitor
           - nxext-ionic-angular
