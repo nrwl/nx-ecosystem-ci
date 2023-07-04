@@ -1,5 +1,8 @@
 import fetch from 'node-fetch'
 import { setupEnvironment } from './utils'
+import * as ts from 'typescript'
+import * as path from 'path'
+import * as fs from 'fs'
 
 type Status = 'success' | 'failure' | 'cancelled'
 type Env = {
@@ -49,13 +52,17 @@ async function run() {
 
 	await setupEnvironment()
 
+	const repoUrlForSuite = getRepoFromTestFile(env.SUITE)
+
 	const webhookContent = {
 		blocks: [
 			{
 				type: 'section',
 				text: {
 					type: 'mrkdwn',
-					text: `${statusConfig[env.STATUS].emoji}  ${env.SUITE}`,
+					text: `${statusConfig[env.STATUS].emoji}  [${
+						env.SUITE
+					}](${repoUrlForSuite})`,
 				},
 			},
 			{
@@ -198,4 +205,43 @@ async function nextNxVersion(): Promise<string> {
 				(jsonData as any)?.['dist-tags']?.['next'] ??
 				(jsonData as any)?.['dist-tags']?.['latest'],
 		)
+}
+
+function getRepoFromTestFile(file: string): string | undefined {
+	try {
+		const filePath = path.resolve(process.cwd(), 'tests', `${file}.ts`)
+
+		const sourceFile = ts.createSourceFile(
+			filePath,
+			fs.readFileSync(filePath, 'utf8'),
+			ts.ScriptTarget.ESNext,
+		)
+
+		let repo: string | undefined
+
+		function visit(node: ts.Node) {
+			if (ts.isObjectLiteralExpression(node)) {
+				node.properties.forEach((prop) => {
+					if (ts.isPropertyAssignment(prop)) {
+						if (prop.name.getText() === 'repo') {
+							repo = (prop.initializer as ts.StringLiteral).text
+						}
+					}
+				})
+			}
+
+			ts.forEachChild(node, visit)
+		}
+
+		ts.forEachChild(sourceFile, visit)
+
+		if (!repo) {
+			return undefined
+		}
+
+		return `https://github.com/${repo}`
+	} catch (e) {
+		console.error(e)
+		return undefined
+	}
 }
