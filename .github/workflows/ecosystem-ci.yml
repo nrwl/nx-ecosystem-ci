@@ -62,3 +62,11 @@ jobs:
           STATUS: ${{ job.status }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - if: always()
+        run: pnpm tsx discord-webhook.ts
+        env:
+          WORKFLOW_NAME: ci
+          SUITE: ${{ matrix.suite }}
+          STATUS: ${{ job.status }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
