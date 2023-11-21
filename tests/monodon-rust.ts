@@ -6,7 +6,8 @@ export async function test(options: RunOptions) {
 		...options,
 		repo: 'Cammisuli/monodon',
 		branch: 'main',
-		build: ['build rust'],
-		test: ['test rust'],
+		build: ['build'],
+		test: ['test'],
+		e2e: ['e2e'],
 	})
 }
