@@ -42,6 +42,7 @@ jobs:
         with:
           node-version: 18
         id: setup-node
+      - uses: dtolnay/rust-toolchain@stable
       - uses: denoland/setup-deno@v1
         with:
           deno-version: v1.x
