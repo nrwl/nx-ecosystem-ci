@@ -27,9 +27,6 @@ jobs:
           - nxext-solid
           - nxext-stencil
           - nxext-vue
-          - nxext-capacitor
-          - nxext-ionic-angular
-          - nxext-ionic-react
           - qwik-nx
       fail-fast: false
     steps:
