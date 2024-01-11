@@ -15,12 +15,8 @@ on:
         type: choice
         options:
           - monodon-rust
-          - nx-aws-lambda
-          - nx-deno
           - nx-examples
-          - nx-netlify
           - nx-nx-ignore
-          - nx-remix
           - nx-rspack
           - nxext-svelte
           - nxext-solid
