@@ -163,6 +163,7 @@ async function nextNxVersion(): Promise<string> {
 		.then((response) => response.json())
 		.then(
 			(jsonData) =>
+				(jsonData as any)?.['dist-tags']?.['canary'] ??
 				(jsonData as any)?.['dist-tags']?.['next'] ??
 				(jsonData as any)?.['dist-tags']?.['latest'],
 		)
