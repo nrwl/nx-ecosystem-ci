@@ -251,7 +251,7 @@ export async function runInRepo(options: RunOptions & RepoOptions) {
 		await e2eCommand?.(pkg.scripts)
 	}
 
-	await $`${pm} nx migrate canary`
+	await $`${pm} nx migrate next`
 	const justInstall = getCommand(agent, 'install')
 	try {
 		await $`${justInstall}`
