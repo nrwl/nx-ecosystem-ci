@@ -153,20 +153,32 @@ async function createDescription(suite: string, targetText: string) {
 async function nxRepoInfo() {
 	const repoText = 'nrwl/nx'
 	const nextVersion = await nextNxVersion()
-
-	const link = `https://github.com/nrwl/nx/commits/${nextVersion}`
-	return `[${repoText}@${nextVersion}](${link})`
+	const link = `https://github.com/nrwl/nx/commits/${nextVersion.commitHash}`
+	return `[${repoText}@${nextVersion.version}](${link})`
 }
 
-async function nextNxVersion(): Promise<string> {
+async function nextNxVersion(): Promise<{
+	commitHash: string
+	version: string
+}> {
 	return fetch(`https://registry.npmjs.org/nx`)
 		.then((response) => response.json())
-		.then(
-			(jsonData) =>
-				(jsonData as any)?.['dist-tags']?.['canary'] ??
-				(jsonData as any)?.['dist-tags']?.['next'] ??
-				(jsonData as any)?.['dist-tags']?.['latest'],
-		)
+		.then((jsonData) => {
+			const version = (jsonData as any)?.['dist-tags']?.['canary']
+				? 'canary'
+				: (jsonData as any)?.['dist-tags']?.['next']
+				? 'next'
+				: (jsonData as any)?.['dist-tags']?.['latest']
+				? 'latest'
+				: 'latest'
+
+			return {
+				commitHash: (jsonData as any)?.versions?.[
+					(jsonData as any)?.['dist-tags']?.[version]
+				]?.gitHead,
+				version: (jsonData as any)?.['dist-tags']?.[version],
+			}
+		})
 }
 
 run().catch((e) => {
