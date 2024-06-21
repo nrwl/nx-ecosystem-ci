@@ -40,19 +40,20 @@ Please read our [contributing guide](CONTRIBUTING.md) for details on how to add 
 
 # reporting results
 
-## Slack
+## Discord
 
-Results are posted automatically to `#nx-ecosystem-ci` channel on [Nrwl Community slack](https://join.slack.com/t/nrwlcommunity/shared_invite/zt-1wbp4do0g-3czhwijFnRzsilGI7eJuag)
+Results are posted automatically to [`#ecosystem-ci`](https://discord.com/channels/1143497901675401286/1162366478952169533) channel on [Nx Community Discord](https://go.nx.dev/community).
 
-### on your own Slack server
+### on your own server
 
-- Follow the instructions [here](https://api.slack.com/messaging/webhooks) to create an incoming webhook for your Slack workspace
+- Go to `Server settings > Integrations > Webhooks` and click `New Webhook`
+- Give it a name, icon and a channel to post to
 - copy the webhook url
 - get in touch with admins of this repo so they can add the webhook
 
-#### how to add a slack webhook here - in your fork/repo
+#### how to add a discord webhook here
 
 - Go to `<github repo>/settings/secrets/actions` and click on `New repository secret`
-- set `Name` as `SLACK_WEBHOOK_URL`
-- paste the slack webhook url you copied from above into `Value`
+- set `Name` as `DISCORD_WEBHOOK_URL`
+- paste the discord webhook url you copied from above into `Value`
 - Click `Add secret`
